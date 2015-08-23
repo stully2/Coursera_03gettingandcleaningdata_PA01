@@ -18,28 +18,32 @@ cNames <- function(x,myPattern,st = TRUE) {
 ##______________________________________________________________________________
 
 
-MyPath <- getwd()
-MyPath <- paste(MyPath,"/s03_w03_Project",sep = "")
 
-a <- read.table(paste(MyPath,"/data/features.txt",sep = ""),header = F,sep=" ")
+
+MyPath <- getwd()
+
+
+a <- read.table(paste(MyPath,"/features.txt",sep = ""),header = F,sep=" ")
 a <- a$V2
 a <- sub("mean\\(\\)","MEAN_FUN",a)
 a <- sub("std\\(\\)","STD_FUN",a)
 
-act <- read.table(paste(MyPath,"/data/activity_labels.txt",sep = ""),header = F,sep=" ",col.names = c("Act_ID","Act_Name"))
+
+
+act <- read.table(paste(MyPath,"/activity_labels.txt",sep = ""),header = F,sep=" ",col.names = c("Act_ID","Act_Name"))
 
 
 
-zVal <- read.table(paste(MyPath,"/data/X_train.txt",sep = ""),col.names = a)
-zAct <- read.table(paste(MyPath,"/data/y_train.txt",sep = ""),col.names="Act_ID")
+zVal <- read.table(paste(MyPath,"/X_train.txt",sep = ""),col.names = a)
+zAct <- read.table(paste(MyPath,"/y_train.txt",sep = ""),col.names="Act_ID")
 zAct <- merge(zAct,act)
-zSub <- read.table(paste(MyPath,"/data/subject_train.txt",sep = ""),col.names = "Subject")
+zSub <- read.table(paste(MyPath,"/subject_train.txt",sep = ""),col.names = "Subject")
 ztrain <- cbind("Group"="Train",zSub,zAct,zVal)
 
-zVal <- read.table(paste(MyPath,"/data/X_test.txt",sep = ""),col.names = a)
-zAct <- read.table(paste(MyPath,"/data/y_test.txt",sep = ""),col.names="Act_ID")
+zVal <- read.table(paste(MyPath,"/X_test.txt",sep = ""),col.names = a)
+zAct <- read.table(paste(MyPath,"/y_test.txt",sep = ""),col.names="Act_ID")
 zAct <- merge(zAct,act)
-zSub <- read.table(paste(MyPath,"/data/subject_test.txt",sep = ""),col.names = "Subject")
+zSub <- read.table(paste(MyPath,"/subject_test.txt",sep = ""),col.names = "Subject")
 ztest <- cbind("Group"="Test",zSub,zAct,zVal)
 
 zTotal <- rbind(ztrain,ztest)
@@ -57,4 +61,4 @@ dMelt <- melt(MyData,id=cns[1:4],measure.vars = cns[5:length(cns)])
 dMelt <- rename(dMelt,Orig_Head=variable)
 a <- dcast(dMelt, Subject + Act_Name ~ Orig_Head,mean)
 ##write.table(a,"summary.csv",sep = ",",row.names = FALSE)
-write.table(a,paste(MyPath,"/results/summary.txt",sep = ""),row.names = FALSE)
+write.table(a,paste(MyPath,"/summary.txt",sep = ""),row.names = FALSE)
