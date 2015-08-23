@@ -14,3 +14,5 @@ Data files should be placed in your R working directory for coding to run proper
 - X_train.txt
 - y_test.txt
 - y_train.txt
+
+The purpose of the coding is to take the mean and standard deveation pre-processed data from above and provide a mean summary by participant and activity. Summary data is provided in a "wide" format.
